@@ -5,10 +5,20 @@ class Board:
     def __init__(self, width, height):
         self.width = width
         self.height = height
+        self.num_rows = 20
+        self.num_cols = 20
+        self.cell_size = 25
+        self.buffer = width / 2 - (self.cell_size * 20)
+        self.white = (255, 255, 255)
+        self.black = (0, 0, 0)
 
     def draw(self, window):
-        CELL_SIZE = 25
-        for x in range(0, self.width, CELL_SIZE):
-            pygame.draw.line(window, (0, 0, 0), (x, 0), (x, self.height))
-        for y in range(0, self.height, CELL_SIZE):
-            pygame.draw.line(window, (0, 0, 0), (0, y), (self.width, y))
+        rect = pygame.Rect(self.buffer, self.buffer, self.cell_size * 20, self.cell_size * 20)
+        pygame.draw.rect(window, self.white, rect, width=0)
+        rect = pygame.Rect(self.buffer, self.buffer, self.cell_size * 20, self.cell_size * 20)
+        pygame.draw.rect(window, self.black, rect, width=5)
+
+        for i in range(self.num_cols):
+            for j in range(self.num_rows):
+                rect = pygame.Rect((i * self.cell_size + self.buffer, j * self.cell_size + self.buffer), (self.cell_size, self.cell_size))
+                pygame.draw.rect(window, self.black, rect, 2)

@@ -21,6 +21,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
             
+            self.update()
             self.paint(self.screen)
             pygame.display.flip()
             clock.tick(self.frames_per_second)

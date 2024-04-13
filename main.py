@@ -1,23 +1,22 @@
 import pygame
 import game
-import board
+import simulation
 
 TITLE = "Blockus"
-NUM_ROWS = 20
-NUM_COLS = 20
-CELL_SIZE = 25
-WINDOW_WIDTH  = NUM_COLS * CELL_SIZE
-WINDOW_HEIGHT = NUM_ROWS * CELL_SIZE
+WINDOW_WIDTH  = 1250
+WINDOW_HEIGHT = 800
 DESIRED_RATE  = 60
 
 class PygameApp(game.Game):
     def __init__(self, title, width, height, frame_rate):
         super().__init__(title, width, height, frame_rate)
-        self.board = board.Board(width, height)
+        self.sim = simulation.Simulation(WINDOW_WIDTH, WINDOW_HEIGHT)
 
+    def update(self):
+        self.sim.update()
+    
     def paint(self, surface):
-        surface.fill((255, 255, 255))
-        self.board.draw(surface)
+        self.sim.draw(surface)
 
 def main():
     pygame.init()
