@@ -9,17 +9,32 @@ class Board:
         self.num_cols = 20
         self.cell_size = 25
         self.buffer = width / 2 - (self.cell_size * 20)
+        self.border = 5
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
+
+        self.grid = [[False for _ in range(self.num_cols)] for _ in range(self.num_rows)]
 
     def getCoordinate(self, row, col):
         rect = pygame.Rect(self.buffer + col * self.cell_size, self.buffer + row * self.cell_size, self.cell_size, self.cell_size)
         return rect
 
+    def checkGrid(self, row, col):
+        return self.grid[row][col]
+
+    def setGrid(self, row, col, newValue):
+        if row < self.num_rows and col < self.num_cols:
+            self.grid[row][col] = newValue
+    
+    def resetGrid(self):
+        for i in range(self.num_cols):
+            for j in range(self.num_rows):
+                self.grid[i][j] = False
+
     def draw(self, window):
         rect = pygame.Rect(self.buffer, self.buffer, self.cell_size * 20, self.cell_size * 20)
         pygame.draw.rect(window, self.white, rect, width=0)
-        rect = pygame.Rect(self.buffer, self.buffer, self.cell_size * 20, self.cell_size * 20)
+        rect = pygame.Rect(self.buffer - self.border , self.buffer -self.border, self.cell_size * 20 + self.border * 2, self.cell_size * 20 + self.border * 2)
         pygame.draw.rect(window, self.black, rect, width=5)
 
         for i in range(self.num_cols):

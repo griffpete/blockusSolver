@@ -1,5 +1,6 @@
 import pygame
 import pygame.locals
+import sys
 
 class Game:
     def __init__( self, name, width, height, frames_per_second ):
@@ -21,8 +22,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
             
-            self.update()
-            self.paint(self.screen)
+            self.update(self.screen)
             pygame.display.flip()
             clock.tick(self.frames_per_second)
 
