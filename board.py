@@ -12,6 +12,10 @@ class Board:
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
 
+    def getCoordinate(self, row, col):
+        rect = pygame.Rect(self.buffer + col * self.cell_size, self.buffer + row * self.cell_size, self.cell_size, self.cell_size)
+        return rect
+
     def draw(self, window):
         rect = pygame.Rect(self.buffer, self.buffer, self.cell_size * 20, self.cell_size * 20)
         pygame.draw.rect(window, self.white, rect, width=0)
