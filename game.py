@@ -11,7 +11,7 @@ class Game:
         self.screen = pygame.display.set_mode((width, height))
         pygame.display.set_caption( name )
 
-    def paint(self, surface):
+    def update(self, surface):
         raise NotImplementedError( )
 
     def main_loop( self ):        

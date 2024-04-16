@@ -9,7 +9,9 @@ class Simulation:
         self._NewRun = True
 
         self.board = board.Board(width, height)
-        self.redBlocks = blocks.Blocks((250, 27, 27))
+        self.redBlocks = blocks.Blocks((250, 27, 27), 0, 0)
+        self.greenBlocks = blocks.Blocks((0, 163, 15), 19, 19)
+
 
     def update(self, window):
         if self._NewRun:            #this resets board 
@@ -19,18 +21,14 @@ class Simulation:
         
         self.placeNextPiece(window)
 
-    def placeNextPiece(self, window):
-        row = col = 0
+        if self.redBlocks.isEmpty() and self.greenBlocks.isEmpty():
+            #self._NewRun = True
+            pass
 
-        for i in range(5):
-            block = self.redBlocks.getNext()
-            if block:
-                print("draw a block")
-                block.draw(window, self.board, row, col)
-                col += 2
-            else:
-                print("block == false")
-    
+    def placeNextPiece(self, window):
+        self.redBlocks.drawNext(window, self.board)
+        self.greenBlocks.drawNext(window, self.board)
+
     def drawBoard(self, window):
         window.fill((186, 186, 186))
         self.board.draw(window)
