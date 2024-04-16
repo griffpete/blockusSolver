@@ -13,16 +13,17 @@ class Board:
         self.border = 5
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
-        self.grid = numpy.full((20, 20), False)
+        self.grid = numpy.full((20, 20), True)
 
     def getCoordinate(self, row, col):
         rect = pygame.Rect(self.buffer + col * self.cell_size, self.buffer + row * self.cell_size, self.cell_size, self.cell_size)
         return rect
 
     def checkGrid(self, row, col):
+        #returns true if it is open, false if coordinates are out of bounds or already occupied
         if row >= 20 or col >= 20 or row < 0 or col < 0:
             return False
-        return not self.grid[row][col]
+        return self.grid[row][col]
 
     def setGrid(self, row, col, newValue):
         if row < self.num_rows and col < self.num_cols:
@@ -31,7 +32,7 @@ class Board:
     def resetGrid(self):
         for row in range(self.num_rows):
             for col in range(self.num_cols):
-                self.grid[row][col] = False
+                self.grid[row][col] = True
 
     def draw(self, window):
         rect = pygame.Rect(self.buffer, self.buffer, self.cell_size * 20, self.cell_size * 20)
