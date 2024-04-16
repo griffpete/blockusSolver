@@ -3,7 +3,8 @@ import numpy
 
 class Blocks:
     def __init__(self, color, start_row, start_col):
-        self._bag = [straightFive(color), straightFour(color), straightThree(color), straightTwo(color), single(color), plus(color)] 
+        self._bag = [straightFive(color), straightFour(color), straightThree(color)
+                    ,straightTwo(color), single(color), bigT(color), plus(color)] 
         self._available_pos = numpy.full((20, 20), False)
         self._available_pos[start_row][start_col] = True
 
@@ -81,6 +82,16 @@ class Tile:
     def rotate(self):
         self._rotation += 90
 
+    def placeTile(self, board, coordinates):
+        #ahhh i need food
+        #this needs to check if shape can be made, if not rotate, flip whatever
+        #calls draw cude on list of coodinates if it can be drawn
+        pass
+
+    def drawCube(self, board, row, col):
+        pygame.draw.rect(window, self._color, board.getCoordinate(row, col))
+        board.setGrid(row, col, True)
+
 
 class straightFive(Tile):
     def __init__(self, color):
@@ -89,10 +100,11 @@ class straightFive(Tile):
 
     def draw(self, window, board, row, col):
         first_pos = row, col
+        coordinates = []
         for i in range(5):
-            pygame.draw.rect(window, self._color, board.getCoordinate(row, col))
-            board.setGrid(row, col, True)
+            coordinates.append((row, col))
             row += 1
+        self.placeTile(board, coordinates)
         last_pos = row, col
         return [first_pos, last_pos]
 
@@ -104,8 +116,7 @@ class straightFour(Tile):
     def draw(self, window, board, row, col):
         first_pos = row, col
         for i in range(4):
-            pygame.draw.rect(window, self._color, board.getCoordinate(row, col))
-            board.setGrid(row, col, True)
+            self.placeTile(board, row, col)
             row += 1
         last_pos = row, col
         return [first_pos, last_pos]
@@ -149,7 +160,7 @@ class single(Tile):
         last_pos = row, col
         return [last_pos]
 
-class plus(Tile):
+class bigT(Tile):
     def __init__(self, color):
         super().__init__(color, 5, 0, False)
         self._color = color
@@ -164,6 +175,34 @@ class plus(Tile):
         bottom_pos = row, col
 
         row += 1
+        col += 1
+        pygame.draw.rect(window, self._color, board.getCoordinate(row, col))
+        board.setGrid(row, col, True)
+        right_pos = row, col
+
+        col -= 2
+        pygame.draw.rect(window, self._color, board.getCoordinate(row, col))
+        board.setGrid(row, col, True)
+        left_pos = row, col
+
+        last_pos = row, col
+        return [top_pos, left_pos, right_pos, bottom_pos]
+
+class plus(Tile):
+    def __init__(self, color):
+        super().__init__(color, 5, 0, False)
+        self._color = color
+
+    def draw(self, window, board, row, col):
+        top_pos = row, col
+
+        for i in range(3):
+            pygame.draw.rect(window, self._color, board.getCoordinate(row, col))
+            board.setGrid(row, col, True)
+            row -= 1
+        bottom_pos = row, col
+
+        row += 2
         col += 1
         pygame.draw.rect(window, self._color, board.getCoordinate(row, col))
         board.setGrid(row, col, True)
