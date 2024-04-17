@@ -1,10 +1,9 @@
 import pygame
 
 class Tile:
-    def __init__(self, color, cubes, can_rotate):
+    def __init__(self, color, cubes): 
         self._color = color
         self._cubes = cubes
-        self._can_rotate = can_rotate
     
     def getCubes(self):
         return self._cubes
@@ -24,10 +23,9 @@ class Tile:
             for pos in coordinates:
                 row, col = pos
                 if not board.checkGrid(row, col, id):
-                    if self._can_rotate:
                         valid = False
-                        coordinates = self.rotate90(coordinates)
-                        break
+            if self._cubes > 1 and not valid:
+                coordinates = self.rotate90(coordinates)
         
         if not valid:
             return False
@@ -40,7 +38,6 @@ class Tile:
         return True
     
     def rotate90(self, coordinates):
-        #print("original:", coordinates)
         new_cords = []
         first_row, first_col = coordinates[0]
         second_row, second_col = coordinates[1]
@@ -49,13 +46,14 @@ class Tile:
             for pos in coordinates:
                 row, col = pos
                 dis = first_col - col
-                new_cords.append((first_row + dis, first_col))
+                dif = first_row - row
+                new_cords.append((first_row + dis, first_col - dif))
         else:
             for pos in coordinates:
                 row, col = pos
                 dis = first_row - row
-                new_cords.append((first_row, first_col - dis))
-        #print("rotated:", new_cords, "\n")
+                dif = first_col - col
+                new_cords.append((first_row + dif, first_col - dis))
         return new_cords 
      
         

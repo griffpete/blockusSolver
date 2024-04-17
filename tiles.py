@@ -3,7 +3,7 @@ from tileParent import Tile
 '''
 class newTileBlueprint(Tile):
     def __init__(self, color, id):
-        super().__init__(color, num_cubes, can_rotate)
+        super().__init__(color, num_cubes)
         self._color = color
         self._id = id
     
@@ -23,7 +23,7 @@ class newTileBlueprint(Tile):
 
 class straightFive(Tile):
     def __init__(self, color, id):
-        super().__init__(color, 5, True)
+        super().__init__(color, 5)
         self._color = color
         self._id = id
 
@@ -39,7 +39,7 @@ class straightFive(Tile):
 
 class straightFour(Tile):
     def __init__(self, color, id):
-        super().__init__(color, 4, True)
+        super().__init__(color, 4)
         self._color = color
         self._id = id
 
@@ -55,7 +55,7 @@ class straightFour(Tile):
 
 class straightThree(Tile):
     def __init__(self, color, id):
-        super().__init__(color, 3, True)
+        super().__init__(color, 3)
         self._color = color
         self._id = id
 
@@ -71,7 +71,7 @@ class straightThree(Tile):
 
 class straightTwo(Tile):
     def __init__(self, color, id):
-        super().__init__(color, 2, True)
+        super().__init__(color, 2)
         self._color = color
         self._id = id
 
@@ -89,7 +89,7 @@ class straightTwo(Tile):
 
 class single(Tile):
     def __init__(self, color, id):
-        super().__init__(color, 1, False)
+        super().__init__(color, 1)
         self._color = color
         self._id = id
 
@@ -102,7 +102,7 @@ class single(Tile):
 
 class bigT(Tile):
     def __init__(self, color, id):
-        super().__init__(color, 5, True)
+        super().__init__(color, 5)
         self._color = color
         self._id = id
 
@@ -126,7 +126,7 @@ class bigT(Tile):
 
 class littleT(Tile):
     def __init__(self, color, id):
-        super().__init__(color, 4, True)
+        super().__init__(color, 4)
         self._color = color
         self._id = id
 
@@ -149,7 +149,7 @@ class littleT(Tile):
     
 class plus(Tile):
     def __init__(self, color, id):
-        super().__init__(color, 5, False)
+        super().__init__(color, 5)
         self._color = color
         self._id = id
 
