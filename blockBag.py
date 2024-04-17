@@ -6,7 +6,7 @@ class BlockBag:
     def __init__(self, color, start_row, start_col, id):
         self._id = id
         self._bag = [tiles.straightFive(color, id), tiles.straightFour(color, id), tiles.straightThree(color, id)
-                    ,tiles.straightTwo(color, id), tiles.single(color, id), tiles.bigT(color, id), tiles.plus(color, id)] 
+                    ,tiles.straightTwo(color, id), tiles.single(color, id), tiles.bigT(color, id), tiles.littleT(color, id), tiles.plus(color, id)] 
         
         #self._bag = [tiles.single(color),tiles.single(color),tiles.single(color),tiles.single(color),tiles.single(color)]
         self._available_pos = numpy.full((20, 20), False)
@@ -40,9 +40,7 @@ class BlockBag:
             for block in current_block:
                 row, col = block
                 self.setNewAvailablePositions(row, col, board)
-            
-        else:
-            print("error")
+        
 
     def getIndex(self, item):
         i = 0
@@ -69,19 +67,19 @@ class BlockBag:
         row += 1
         col -= 1
         
-        if board.checkGrid(row, col):
+        if board.checkGrid(row, col, self._id):
             self._available_pos[row][col] = True
 
         col += 2
-        if board.checkGrid(row, col):
+        if board.checkGrid(row, col, self._id):
             self._available_pos[row][col] = True
 
         row -= 2
-        if board.checkGrid(row, col):
+        if board.checkGrid(row, col, self._id):
             self._available_pos[row][col] = True
 
         col -= 2
-        if board.checkGrid(row, col):
+        if board.checkGrid(row, col, self._id):
             self._available_pos[row][col] = True
 
     

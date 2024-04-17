@@ -5,7 +5,7 @@ import simulation
 TITLE = "Blockus"
 WINDOW_WIDTH  = 1250
 WINDOW_HEIGHT = 800
-DESIRED_RATE  = 1
+DESIRED_RATE  = 10
 
 class PygameApp(game.Game):
     def __init__(self, title, width, height, frame_rate):

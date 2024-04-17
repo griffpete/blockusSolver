@@ -1,6 +1,6 @@
 import board, blockBag
 
-
+TURN = 0
 class Simulation:
     def __init__(self, width, height):
         self._width = width
@@ -27,10 +27,19 @@ class Simulation:
             pass
 
     def placeNextPiece(self, window):
-        self.redBlocks.drawNext(window, self.board)
-        self.greenBlocks.drawNext(window, self.board)
-        self.yellowBlocks.drawNext(window, self.board)
-        self.BlueBlocks.drawNext(window, self.board)
+        global TURN
+        
+        if TURN == 0:
+            self.redBlocks.drawNext(window, self.board)
+        if TURN == 1:
+            self.yellowBlocks.drawNext(window, self.board)
+        if TURN == 2:
+            self.greenBlocks.drawNext(window, self.board)
+        if TURN == 3:
+            self.BlueBlocks.drawNext(window, self.board)
+        
+        TURN = (TURN + 1) % 4
+        
 
     def drawBoard(self, window):
         window.fill((186, 186, 186))
