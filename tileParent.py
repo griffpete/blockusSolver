@@ -17,9 +17,6 @@ class Tile:
         valid = True
         for i in range(4):
             valid = True
-            '''if coordinates == None:
-                print(self._cubes, " was None")
-                return False'''
             for pos in coordinates:
                 row, col = pos
                 if not board.checkGrid(row, col, id):
@@ -30,7 +27,8 @@ class Tile:
         if not valid:
             return False
                     
-        print("size" ,self._cubes, "(r1, g2, y3, b4) id:",id, "coordinates", coordinates)
+        
+        #print("size" ,self._cubes, "(r1, g2, y3, b4) id:",id, "coordinates", coordinates)
         for pos in coordinates:
             row, col = pos
             self.drawCube(window, board, row, col)
