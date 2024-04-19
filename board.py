@@ -9,7 +9,7 @@ class Board:
         self.num_rows = 20
         self.num_cols = 20
         self.cell_size = 25
-        self.buffer = width / 2 - (self.cell_size * 20)
+        self.buffer = width / 2 -  ((self.cell_size * 20) / 2)
         self.border = 5
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)

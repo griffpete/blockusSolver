@@ -14,8 +14,9 @@ class Simulation:
         self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, 3)
         self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, 4)
 
-        self.seeds = 0
+        self.seeds = self.getSeeds()
         self.recurring_seed = 0
+        self.score = 0
 
 
     def update(self, window):
@@ -35,6 +36,7 @@ class Simulation:
             
             self._NewRun = True
             self.recordSeed()
+            self.calculateScore()
             self.updateTerminal()
             #time.sleep(1)
 
@@ -64,30 +66,43 @@ class Simulation:
         self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, 4)
     
     def recordSeed(self):
-        seed = self.board.getGrid()
-        
+        board = self.board.getGrid()
         filename = "blockusSeeds.txt"
-    
-        delimiter = "#"  # Delimiter to separate seeds
-    
-        # Check if the seed already exists in the file
+        seed = ""
+        for row in range(20):
+            for col in range(20):
+                seed += str(board[row][col])
+        
         with open(filename, 'r') as file:
-            existing_seeds = file.read().split(delimiter)
-            seed_str = delimiter.join([''.join(map(str, row)) for row in seed])
-            if seed_str in existing_seeds:
-                self.recurring_seed += 1
-                return
+            for line in file:
+                if seed == line:
+                    self.recurring_seed += 1
+                    return
 
-        # Add the new seed to the file
         with open(filename, 'a') as file:
-            seed_str = delimiter.join([''.join(map(str, row)) for row in seed])
-            file.write(seed_str + delimiter + "\n")
+            file.write(seed + '\n') 
         self.seeds += 1
         return
 
     def updateTerminal(self):
-        #print("\rTotal seeds:", self.seeds)
-        #print("Duplicates:", self.recurring_seed)
-        pass
-        
+        print("Total seeds:", self.seeds, " | Duplicates:", self.recurring_seed, " | Highest Score:", self.score, "%", end="\r")
     
+    def getSeeds(self):
+        filename = "blockusSeeds.txt"
+        i = 0
+        with open(filename, 'r') as file:
+            for _ in file:
+                i += 1
+        return i
+    
+    def calculateScore(self):
+        r = self.redBlocks.getBagSize()
+        g = self.greenBlocks.getBagSize()
+        b = self.BlueBlocks.getBagSize()
+        y = self.yellowBlocks.getBagSize()
+
+        score = r + g + b +y
+        total = 84
+        total_score = round(score / total * 100, 1)
+        if total_score > self.score:
+            self.score = total_score

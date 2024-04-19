@@ -15,7 +15,9 @@ class BlockBag:
         self._available_pos = []
         self._available_pos.append(self._start)
         self._is_done = False
-        
+    
+    def getBagSize(self):
+        return len(self._bag)
 
     def drawNext(self, window, board):
         #draws the biggest block in the bag, then removes it from bag

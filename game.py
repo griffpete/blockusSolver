@@ -17,6 +17,7 @@ class Game:
     def main_loop( self ):        
         clock = pygame.time.Clock()
         running = True
+        print("\n") #just for formating outputs
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -26,5 +27,6 @@ class Game:
             pygame.display.flip()
             clock.tick(self.frames_per_second)
 
+        print("\n") #just for formating outputs
         pygame.quit()
         sys.exit()
