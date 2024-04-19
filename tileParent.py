@@ -15,7 +15,7 @@ class Tile:
     def placeTile(self, window, board, coordinates, id):
         #print("new shape")
         valid = True
-        for i in range(4):
+        for _ in range(4):
             valid = True
             for pos in coordinates:
                 row, col = pos
@@ -33,7 +33,7 @@ class Tile:
             row, col = pos
             self.drawCube(window, board, row, col)
             board.setGrid(row, col, id)
-        return True
+        return coordinates
     
     def rotate90(self, coordinates):
         new_cords = []

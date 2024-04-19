@@ -96,27 +96,22 @@ class BlockBag:
        
     
     def setNewAvailablePositions(self, row, col, board):
-        print(row, col)
         row += 1
         col -= 1
         if board.checkGrid(row, col, self._id):
             self._available_pos.append((row, col))
-            print("passed 1")
 
         col += 2
         if board.checkGrid(row, col, self._id):
             self._available_pos.append((row, col))
-            print("passed 2")
 
         row -= 2
         if board.checkGrid(row, col, self._id):
             self._available_pos.append((row, col))
-            print("passed 3")
 
         col -= 2
         if board.checkGrid(row, col, self._id):
             self._available_pos.append((row, col))
-            print("passed 4")
 
     
     def isEmpty(self):

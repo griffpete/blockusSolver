@@ -31,11 +31,11 @@ class Simulation:
 
     def placeNextPiece(self, window):
         global TURN
-        '''
+        
         if TURN == 0:
             self.redBlocks.drawNext(window, self.board)
         if TURN == 1:
-            self.yellowBlocks.drawNext(window, self.board)'''
+            self.yellowBlocks.drawNext(window, self.board)
         if TURN == 2:
             self.greenBlocks.drawNext(window, self.board)
         if TURN == 3:
