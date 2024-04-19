@@ -26,8 +26,11 @@ class Simulation:
         self.placeNextPiece(window)
 
         if self.redBlocks.isDone() and self.greenBlocks.isDone() and self.yellowBlocks.isDone() and self.BlueBlocks.isDone():
+            if self.redBlocks.isEmpty() and self.greenBlocks.isEmpty() and self.yellowBlocks.isEmpty() and self.BlueBlocks.isEmpty():
+                while True:
+                    pass
             self._NewRun = True
-            time.sleep(1)
+            #time.sleep(1)
 
     def placeNextPiece(self, window):
         global TURN

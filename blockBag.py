@@ -5,8 +5,10 @@ import tiles
 class BlockBag:
     def __init__(self, color, start_row, start_col, id):
         self._id = id
-        self._bag = [tiles.straightFive(color, id), tiles.straightFour(color, id), tiles.straightThree(color, id)
-                    ,tiles.straightTwo(color, id), tiles.single(color, id), tiles.bigT(color, id), tiles.littleT(color, id), tiles.plus(color, id)] 
+        self._bag = [tiles.straightFive(color, id), tiles.straightFour(color, id), tiles.straightThree(color, id), tiles.halfCross(color, id), tiles.gun(color, id), tiles.lightning(color, id)
+                    ,tiles.straightTwo(color, id), tiles.single(color, id), tiles.bigT(color, id), tiles.littleT(color, id), tiles.plus(color, id)
+                    ,tiles.square(color, id), tiles.utah(color, id), tiles.arch(color, id), tiles.bigL(color, id), tiles.littleL(color, id)
+                    ,tiles.littleR(color, id), tiles.bigR(color, id), tiles.squigle(color, id), tiles.bigS(color, id), tiles.littleS(color, id)] 
         self.sortBag()
         #self._bag = [tiles.single(color),tiles.single(color),tiles.single(color),tiles.single(color),tiles.single(color)]
         self._start = start_row, start_col
@@ -55,6 +57,7 @@ class BlockBag:
         
     def sortBag(self):
         not_changed = True
+        random.shuffle(self._bag)
         while not_changed:
             not_changed = False
             for i in range(len(self._bag)):
