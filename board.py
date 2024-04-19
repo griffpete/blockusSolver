@@ -14,6 +14,9 @@ class Board:
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
         self.grid = numpy.full((20, 20), 0)
+    
+    def getGrid(self):
+        return self.grid
 
     def getCoordinate(self, row, col):
         rect = pygame.Rect(self.buffer + col * self.cell_size, self.buffer + row * self.cell_size, self.cell_size, self.cell_size)
