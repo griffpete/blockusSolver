@@ -25,10 +25,13 @@ class Board:
     def checkGrid(self, row, col, id):
         #returns true if it is open, false if coordinates are out of bounds or already occupied
         if self.invalidIndex(row, col):
+            #print("hello from invalid index")
             return False
         elif self.grid[row][col] != 0:
+            #print("hello from not available position")
             return False
         elif self.checkSides(row, col, id):
+            #print("hello from sides are touching another block")
             return False
         else:
             return True
@@ -65,7 +68,7 @@ class Board:
         return False
     
     def setGrid(self, row, col, newValue):
-        if row < self.num_rows and col < self.num_cols:
+        if not self.invalidIndex(row, col):
             self.grid[row][col] = newValue
     
     def resetGrid(self):

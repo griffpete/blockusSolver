@@ -1,5 +1,6 @@
 import board, blockBag
 import time
+import pygame
 
 TURN = 0
 class Simulation:
@@ -9,15 +10,17 @@ class Simulation:
         self._NewRun = True
 
         self.board = board.Board(width, height)
-        self.redBlocks = blockBag.BlockBag((255, 59, 72), 0, 0, 1)
-        self.greenBlocks = blockBag.BlockBag((65, 250, 65), 19, 19, 2)
-        self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, 3)
-        self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, 4)
+        time_sort = time.time()     #right now each bag is feed a seed of the current time 
+        self.redBlocks = blockBag.BlockBag((255, 59, 72), 0, 0, time_sort, 1)
+        self.greenBlocks = blockBag.BlockBag((65, 250, 65), 19, 19, time_sort, 2)
+        self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, time_sort, 3)
+        self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, time_sort, 4)
 
         self.seeds = self.getSeeds()
         self.recurring_seed = 0
         self.score = 0
 
+        self.repeat_run = True      #Change this to turn infinate loop on or off
 
     def update(self, window):
         if self._NewRun:            #this resets board 
@@ -29,14 +32,14 @@ class Simulation:
         
         self.placeNextPiece(window)
 
-        if self.redBlocks.isDone() and self.greenBlocks.isDone() and self.yellowBlocks.isDone() and self.BlueBlocks.isDone():
+        if self.redBlocks.isDone() and self.greenBlocks.isDone() and self.yellowBlocks.isDone() and self.BlueBlocks.isDone() and self.repeat_run:
             if self.redBlocks.isEmpty() and self.greenBlocks.isEmpty() and self.yellowBlocks.isEmpty() and self.BlueBlocks.isEmpty():
                 time.sleep(1000000000000)
-            
             
             self._NewRun = True
             self.recordSeed()
             self.calculateScore()
+            #self.updateText(window)
             self.updateTerminal()
             #time.sleep(1)
 
@@ -60,10 +63,11 @@ class Simulation:
         self.board.draw(window)
 
     def resetBags(self):
-        self.redBlocks = blockBag.BlockBag((255, 59, 72), 0, 0, 1)
-        self.greenBlocks = blockBag.BlockBag((65, 250, 65), 19, 19, 2)
-        self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, 3)
-        self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, 4)
+        time_sort = time.time()
+        self.redBlocks = blockBag.BlockBag((255, 59, 72), 0, 0, time_sort, 1)
+        self.greenBlocks = blockBag.BlockBag((65, 250, 65), 19, 19, time_sort, 2)
+        self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, time_sort, 3)
+        self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, time_sort, 4)
     
     def recordSeed(self):
         board = self.board.getGrid()
@@ -75,7 +79,7 @@ class Simulation:
         
         with open(filename, 'r') as file:
             for line in file:
-                if seed == line:
+                if seed == line.strip():
                     self.recurring_seed += 1
                     return
 
@@ -87,6 +91,14 @@ class Simulation:
     def updateTerminal(self):
         print("Total seeds:", self.seeds, " | Duplicates:", self.recurring_seed, " | Highest Score:", self.score, "%", end="\r")
     
+    def updateText(self, window):
+        font = pygame.font.get_default_font()
+        Font = pygame.font.Font
+        text = f"Score: {self.score}"
+        text_surface = Font.render(text, True, (255, 255, 255))  # White color
+        window.blit(text_surface, (10, 10)) 
+
+
     def getSeeds(self):
         filename = "blockusSeeds.txt"
         i = 0

@@ -20,7 +20,7 @@ class Tile:
             for pos in coordinates:
                 row, col = pos
                 if not board.checkGrid(row, col, id):
-                        valid = False
+                    valid = False
             if self._cubes > 1 and not valid:
                 coordinates = self.rotate90(coordinates)
         
@@ -28,7 +28,6 @@ class Tile:
             return False
                     
         
-        #print("size" ,self._cubes, "(r1, g2, y3, b4) id:",id, "coordinates", coordinates)
         for pos in coordinates:
             row, col = pos
             self.drawCube(window, board, row, col)
