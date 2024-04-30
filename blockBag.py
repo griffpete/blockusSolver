@@ -1,14 +1,16 @@
 import random
 import tiles
+import math
 
 class BlockBag:
-    def __init__(self, color, start_row, start_col, sort_variable, id):
+    def __init__(self, color, start_row, start_col, sort_variable, seeding, id):
         self._id = id
         self._bag = [tiles.straightFive(color, id), tiles.straightFour(color, id), tiles.straightThree(color, id), tiles.halfCross(color, id), tiles.gun(color, id), tiles.lightning(color, id)
                     ,tiles.straightTwo(color, id), tiles.single(color, id), tiles.bigT(color, id), tiles.littleT(color, id), tiles.plus(color, id)
                     ,tiles.square(color, id), tiles.utah(color, id), tiles.arch(color, id), tiles.bigL(color, id), tiles.littleL(color, id)
                     ,tiles.littleR(color, id), tiles.bigR(color, id), tiles.squigle(color, id), tiles.bigS(color, id), tiles.littleS(color, id)] 
-        random.seed(sort_variable)
+        if seeding:
+            random.seed(sort_variable)
         self.sortBag()
         #self._bag = [tiles.single(color),tiles.single(color),tiles.single(color),tiles.single(color),tiles.single(color)]
         self._start = start_row, start_col
@@ -65,6 +67,7 @@ class BlockBag:
         return rand
 
     def getNextPoint(self, i):
+        self.sortPoints()
         try:
             self._available_pos[-i]
         except:
@@ -72,7 +75,32 @@ class BlockBag:
         else:
             return self._available_pos[-i]
 
-       
+    
+    def sortPoints(self):
+        row, col = self._start
+        if row == 0:
+            row = 19
+        else:
+            row = 0
+        if col == 0:
+            col = 19
+        else:
+            col = 0
+
+        not_changed = True
+        while not_changed:
+            not_changed = False
+            for i in range(len(self._available_pos) - 2):
+                row1, col1 = self._available_pos[i]
+                dis1 = math.sqrt((row1 - row)**2 + (col1 - col)**2)
+                row2, col2 = self._available_pos[i + 1]
+                dis2 = math.sqrt((row2 - row)**2 + (col2 - col)**2)
+
+                if dis1 > dis2:
+                    self._available_pos[i], self._available_pos[i + 1] = self._available_pos[i + 1], self._available_pos[i]
+                    not_changed = True
+
+        
     
     def setNewAvailablePositions(self, row, col, board):
         row += 1

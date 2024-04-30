@@ -8,19 +8,22 @@ class Simulation:
         self._width = width
         self._height = height
         self._NewRun = True
+        self._seeding = True
 
         self.board = board.Board(width, height)
         time_sort = time.time()     #right now each bag is feed a seed of the current time 
-        self.redBlocks = blockBag.BlockBag((255, 59, 72), 0, 0, time_sort, 1)
-        self.greenBlocks = blockBag.BlockBag((65, 250, 65), 19, 19, time_sort, 2)
-        self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, time_sort, 3)
-        self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, time_sort, 4)
+        self.redBlocks = blockBag.BlockBag((255, 59, 72), 0, 0, time_sort, self._seeding, 1)
+        self.greenBlocks = blockBag.BlockBag((65, 250, 65), 19, 19, time_sort, self._seeding,2)
+        self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, time_sort, self._seeding, 3)
+        self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, time_sort, self._seeding, 4)
 
         self.seeds = self.getSeeds()
         self.recurring_seed = 0
         self.score = 0
 
-        self.repeat_run = True      #Change this to turn infinate loop on or off
+        self._paused = False
+        self._step = False
+
 
     def update(self, window):
         if self._NewRun:            #this resets board 
@@ -29,19 +32,33 @@ class Simulation:
             self.resetBags()
             self._NewRun = False
             
-        
-        self.placeNextPiece(window)
+        if not self._paused:
+            self.placeNextPiece(window)
+        elif self._step:
+            self.placeNextPiece(window)
+            self._step = False
 
-        if self.redBlocks.isDone() and self.greenBlocks.isDone() and self.yellowBlocks.isDone() and self.BlueBlocks.isDone() and self.repeat_run:
+        if self.redBlocks.isDone() and self.greenBlocks.isDone() and self.yellowBlocks.isDone() and self.BlueBlocks.isDone() and not self._paused:
             if self.redBlocks.isEmpty() and self.greenBlocks.isEmpty() and self.yellowBlocks.isEmpty() and self.BlueBlocks.isEmpty():
                 time.sleep(1000000000000)
             
             self._NewRun = True
             self.recordSeed()
             self.calculateScore()
-            #self.updateText(window)
+                #self.updateText(window)
             self.updateTerminal()
-            #time.sleep(1)
+                #time.sleep(1)
+    
+    def keyPress(self, key):
+        if key == "pause":
+            self._paused = not self._paused
+        elif key == "next":
+            self._NewRun = True
+        elif key == "step":
+            self._step = True
+        elif key == "random":
+            self._seeding = not self._seeding
+        
 
     def placeNextPiece(self, window):
         global TURN
@@ -64,10 +81,10 @@ class Simulation:
 
     def resetBags(self):
         time_sort = time.time()
-        self.redBlocks = blockBag.BlockBag((255, 59, 72), 0, 0, time_sort, 1)
-        self.greenBlocks = blockBag.BlockBag((65, 250, 65), 19, 19, time_sort, 2)
-        self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, time_sort, 3)
-        self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, time_sort, 4)
+        self.redBlocks = blockBag.BlockBag((255, 59, 72), 0, 0, time_sort, self._seeding, 1)
+        self.greenBlocks = blockBag.BlockBag((65, 250, 65), 19, 19, time_sort, self._seeding,2)
+        self.yellowBlocks = blockBag.BlockBag((237, 255, 79), 0, 19, time_sort, self._seeding, 3)
+        self.BlueBlocks = blockBag.BlockBag((65, 145, 250), 19, 0, time_sort, self._seeding, 4)
     
     def recordSeed(self):
         board = self.board.getGrid()

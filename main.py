@@ -14,6 +14,9 @@ class PygameApp(game.Game):
 
     def update(self, window):
         self.sim.update(window)
+    
+    def keyPress(self, key):
+        self.sim.keyPress(key)
 
 def main():
     pygame.init()

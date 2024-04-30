@@ -13,6 +13,9 @@ class Game:
 
     def update(self, surface):
         raise NotImplementedError( )
+    
+    def keyPress(self, key):
+        raise NotImplementedError( )
 
     def main_loop( self ):        
         clock = pygame.time.Clock()
@@ -22,6 +25,17 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.keyPress("pause")
+                    elif event.key == pygame.K_UP:
+                        self.keyPress("next")
+                    elif event.key == pygame.K_RIGHT:
+                        self.keyPress("step")
+                    elif event.key == pygame.K_r:
+                        self.keyPress("random")
+                    elif event.key == pygame.K_q:
+                        running = False
             
             self.update(self.screen)
             pygame.display.flip()
